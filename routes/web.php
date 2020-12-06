@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('p/{any}', function (){
+    return view('p');
+})->where('any', '.*');
+
+Route::get('{any}', function (){
+    return view('f');
+})->where('any', '.*');
