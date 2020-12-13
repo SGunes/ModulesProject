@@ -10,8 +10,11 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+// .js('resources/js/p/app.js', 'public/p/js')
+// .sass('resources/sass/p/app.scss', 'public/p/css');
 
-mix.js('resources/js/f/app.js', 'public/f/js')
-    // .js('resources/js/p/app.js', 'public/p/js')
-    .sass('resources/sass/f/app.scss', 'public/f/css');
-    // .sass('resources/sass/p/app.scss', 'public/p/css');
+var themes = ["a1","a2","a3"];
+themes.forEach(value => {
+    mix.js('resources/themes/' + value + '/js/app.js', 'public/f/' + value + '/js')
+        .sass('resources/themes/' + value + '/sass/app.scss', 'public/f/' + value + '/css');
+});

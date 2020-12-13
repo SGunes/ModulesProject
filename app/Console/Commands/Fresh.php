@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class Stuff extends Command
+class Fresh extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'stuff';
+    protected $signature = 'fresh';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Optimize clear';
+    protected $description = 'Clear All';
 
     /**
      * Create a new command instance.
@@ -38,9 +38,7 @@ class Stuff extends Command
      */
     public function handle()
     {
-        Artisan::call("optimize:clear");
-        $this->info(Artisan::output());
-        Artisan::call("view:clear");
+        Artisan::call("migrate:fresh --seed");
         $this->info(Artisan::output());
     }
 }
