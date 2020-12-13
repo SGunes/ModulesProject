@@ -11,8 +11,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-
     window.Vue = require('vue');
+    // window.VueRouter = require('vue-router').default;
 } catch (e) {}
 
 /**

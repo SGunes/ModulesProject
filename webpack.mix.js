@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 // .js('resources/js/p/app.js', 'public/p/js')
 // .sass('resources/sass/p/app.scss', 'public/p/css');
 
-var themes = ["a1","a2","a3"];
+var themes = ["a1"/*"a2","a3"*/];
 themes.forEach(value => {
     mix.js('resources/themes/' + value + '/js/app.js', 'public/f/' + value + '/js')
         .sass('resources/themes/' + value + '/sass/app.scss', 'public/f/' + value + '/css');

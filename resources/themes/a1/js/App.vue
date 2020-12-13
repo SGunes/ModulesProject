@@ -1,11 +1,15 @@
 <template>
     <div>
-        A1 Teması
+        <layouts></layouts>
     </div>
 </template>
 
 <script>
+    import Layouts from './components/layouts/Index'
     export default {
+        components: {
+            Layouts
+        },
         name: "App"
     }
 </script>
