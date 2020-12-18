@@ -1,9 +1,6 @@
 export function tokenHelper() {
     return {
-        /**
-         * token variable
-         */
-        token : null,
+
         /**
          * storage token column name
          * @returns {string}

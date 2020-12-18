@@ -53063,11 +53063,6 @@ __webpack_require__.r(__webpack_exports__);
 function tokenHelper() {
   return {
     /**
-     * token variable
-     */
-    token: null,
-
-    /**
      * storage token column name
      * @returns {string}
      * @private
@@ -53108,6 +53103,169 @@ function tokenHelper() {
 
 /***/ }),
 
+/***/ "./resources/js/projects/f/axios/index.js":
+/*!************************************************!*\
+  !*** ./resources/js/projects/f/axios/index.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _response_refreshAccessToken__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./response/refreshAccessToken */ "./resources/js/projects/f/axios/response/refreshAccessToken.js");
+/* harmony import */ var _response_statusCodeSuccess__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./response/statusCodeSuccess */ "./resources/js/projects/f/axios/response/statusCodeSuccess.js");
+/* harmony import */ var _response_statusCodeFailed__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./response/statusCodeFailed */ "./resources/js/projects/f/axios/response/statusCodeFailed.js");
+/* harmony import */ var _request_authorizationSetToken__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./request/authorizationSetToken */ "./resources/js/projects/f/axios/request/authorizationSetToken.js");
+
+
+
+
+var instance = axios.create();
+instance.interceptors.request.use(function (config) {
+  config = Object(_request_authorizationSetToken__WEBPACK_IMPORTED_MODULE_3__["authorizationSetToken"])(config);
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+instance.interceptors.response.use(function (response) {
+  Object(_response_statusCodeSuccess__WEBPACK_IMPORTED_MODULE_1__["statusCodeSuccess"])(response.status);
+  return response;
+}, function (error) {
+  var result = Object(_response_refreshAccessToken__WEBPACK_IMPORTED_MODULE_0__["refreshAccessToken"])(error, instance);
+  if (result) return result;
+  Object(_response_statusCodeFailed__WEBPACK_IMPORTED_MODULE_2__["statusCodeFailed"])(error.response.status);
+  return Promise.reject(error);
+});
+/* harmony default export */ __webpack_exports__["default"] = (instance);
+
+/***/ }),
+
+/***/ "./resources/js/projects/f/axios/request/authorizationSetToken.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/projects/f/axios/request/authorizationSetToken.js ***!
+  \************************************************************************/
+/*! exports provided: authorizationSetToken */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authorizationSetToken", function() { return authorizationSetToken; });
+/* harmony import */ var _helpers_tokenHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../helpers/tokenHelper */ "./resources/js/helpers/tokenHelper.js");
+
+/**
+ *
+ * @param config
+ * @returns {*}
+ */
+
+function authorizationSetToken(config) {
+  config.headers['Authorization'] = 'Bearer ' + Object(_helpers_tokenHelper__WEBPACK_IMPORTED_MODULE_0__["tokenHelper"])().getToken();
+  return config;
+}
+
+/***/ }),
+
+/***/ "./resources/js/projects/f/axios/response/refreshAccessToken.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/projects/f/axios/response/refreshAccessToken.js ***!
+  \**********************************************************************/
+/*! exports provided: refreshAccessToken */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "refreshAccessToken", function() { return refreshAccessToken; });
+/**
+ *
+ * @param error
+ * @param instance
+ * @returns {*}
+ */
+function refreshAccessToken(error, instance) {
+  if (401 === error.response.status) {
+    if (error.response.data.newToken) {
+      /**
+       * update new token and refresh query when first 401
+       */
+      fEventBus.setToken(error.response.data.access_token);
+      var originalRequest = error.config;
+
+      if (!originalRequest._retry) {
+        originalRequest._retry = true;
+        return instance(originalRequest); // new axios query
+      }
+    }
+  }
+
+  return null;
+}
+
+/***/ }),
+
+/***/ "./resources/js/projects/f/axios/response/statusCodeFailed.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/projects/f/axios/response/statusCodeFailed.js ***!
+  \********************************************************************/
+/*! exports provided: statusCodeFailed */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "statusCodeFailed", function() { return statusCodeFailed; });
+/**
+ *
+ * @param code
+ */
+function statusCodeFailed(code) {
+  switch (code) {
+    case 404:
+      console.log(code);
+      break;
+
+    case 401:
+      console.log(code);
+      break;
+
+    default:
+      console.log(code);
+      break;
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/projects/f/axios/response/statusCodeSuccess.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/projects/f/axios/response/statusCodeSuccess.js ***!
+  \*********************************************************************/
+/*! exports provided: statusCodeSuccess */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "statusCodeSuccess", function() { return statusCodeSuccess; });
+/**
+ *
+ * @param code
+ */
+function statusCodeSuccess(code) {
+  switch (code) {
+    case 200:
+      console.log(code);
+      break;
+
+    case 201:
+      console.log(code);
+      break;
+
+    default:
+      console.log(code);
+      break;
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/projects/f/bootstrap.js":
 /*!**********************************************!*\
   !*** ./resources/js/projects/f/bootstrap.js ***!
@@ -53121,6 +53279,9 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
+
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
@@ -53136,9 +53297,6 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -53165,10 +53323,28 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_tokenHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/tokenHelper */ "./resources/js/helpers/tokenHelper.js");
+/* harmony import */ var _axios_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./axios/index */ "./resources/js/projects/f/axios/index.js");
+
 
 var fEventBus = new Vue({
+  data: {
+    /**
+     * token variable
+     */
+    token: null
+  },
   methods: Object.assign(Object(_helpers_tokenHelper__WEBPACK_IMPORTED_MODULE_0__["tokenHelper"])(), {
     onLoaded: function onLoaded() {
+      Object(_axios_index__WEBPACK_IMPORTED_MODULE_1__["default"])({
+        method: 'post',
+        url: 'http://localhost:8000/api/auth/login',
+        data: {
+          email: 'selahattin.gunes.55@gmail.com',
+          password: '12341234'
+        }
+      }).then(function (response) {
+        console.log(response);
+      });
       this.$emit('onBanner', 'bannerTest');
       this.$emit('onContent', 'contentTest');
       this.$emit('onFooter', 'footerTest');
