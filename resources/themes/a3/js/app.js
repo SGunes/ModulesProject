@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('../../../js/f/bootstrap');
+require('../../../js/projects/f/bootstrap');
 
 import App from './App.vue';
 

@@ -7,9 +7,12 @@ var afterEach = require('./afterEach.js')();
 Vue.use(VueRouter);
 
 const routes = [
+    { path: '/', component: Slug },
     { path: '/:slug1', component: Slug },
     { path: '/:slug1/:slug2', component: Slug },
     { path: '/:slug1/:slug2/:slug3', component: Slug },
+    { path: '/:slug1/:slug2/:slug3/:slug4', component: Slug },
+    { path: '/:slug1/:slug2/:slug3/:slug4/:slug5', component: Slug },
 ];
 
 const router = new VueRouter({ mode: 'history', routes });

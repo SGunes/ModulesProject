@@ -1,7 +1,7 @@
-require('../../../js/f/bootstrap');
-require('../../../js/f/eventBus');
+require('../../../js/projects/f/bootstrap');
+require('../../../js/projects/f/eventBus');
 
-import { router } from '../../../js/f/router/index'
+import { router } from '../../../js/projects/f/router/index'
 
 import App from './App.vue';
 
